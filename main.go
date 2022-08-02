@@ -1,4 +1,6 @@
-package GoPass
+// GoPass
+// Author: Maximilian Patterson
+package main
 
 import (
 	"fmt"
