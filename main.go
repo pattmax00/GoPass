@@ -1,13 +1,15 @@
 // GoPass
 // Author: Maximilian Patterson
+// Version: 1.1
 package main
 
 import (
+	cryptorand "crypto/rand"
+	"encoding/binary"
 	"fmt"
-	"math/rand"
+	mathrand "math/rand"
 	"os"
 	"strconv"
-	"time"
 )
 
 var runes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()_+[]\\{}|;':,./<>?")
@@ -26,11 +28,16 @@ func main() {
 	pass := make([]rune, size)
 
 	// Seed rand with time
-	rand.Seed(time.Now().UTC().UnixNano())
+	var b [8]byte
+	_, err = cryptorand.Read(b[:])
+	if err != nil {
+		panic("Error securely seeding rand!")
+	}
+	mathrand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
 
 	// Assign every slot of pass to a random rune (generate rand int of length runes to select)
 	for i := range pass {
-		pass[i] = runes[rand.Intn(len(runes))]
+		pass[i] = runes[mathrand.Intn(len(runes))]
 	}
 
 	// Print the pass :D
