@@ -1,5 +1,5 @@
 # GoPass
-An easy to use command-line password generator that creates secure passwords
+An easy to use command-line password generator that creates secure passwords (Version 1.1 adds proper cryptographic seeding of math/rand)
 
 # Usage:
 <code>./gopass [number of characters]</code><br>
