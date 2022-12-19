@@ -1,6 +1,6 @@
 // GoPass
 // Author: Maximilian Patterson
-// Version: 1.1
+// Version: 1.2
 package main
 
 import (
@@ -15,13 +15,16 @@ import (
 var runes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()_+[]\\{}|;':,./<>?")
 
 func main() {
-	// Take OS arg (only accepts one arg)
-	arg := os.Args[1]
+	// Take OS arg (only accepts one arg) handle errors
+	args := os.Args[1:]
+	if len(args) != 1 {
+		panic("No password length specified! (ex: ./gopass 16)")
+	}
 
 	// Convert String arg to int
-	size, err := strconv.Atoi(arg)
+	size, err := strconv.Atoi(args[0])
 	if err != nil {
-		panic(err)
+		panic("Argument supplied must be an integer! (ex: 16)")
 	}
 
 	// Make empty array of runes with size of size
@@ -31,7 +34,7 @@ func main() {
 	var b [8]byte
 	_, err = cryptorand.Read(b[:])
 	if err != nil {
-		panic("Error securely seeding rand!")
+		panic("Error securely seeding crypto/rand!")
 	}
 	mathrand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
 
