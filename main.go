@@ -1,6 +1,6 @@
 // GoPass
 // Author: Maximilian Patterson
-// Version: 1.2
+// Version: 1.2.0
 package main
 
 import (
@@ -12,19 +12,35 @@ import (
 	"strconv"
 )
 
-var runes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()_+[]\\{}|;':,./<>?")
+var allowedCharacters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~!@#$%^&*()_+[]\\{}|;':,./<>?")
 
 func main() {
-	// Take OS arg (only accepts one arg) handle errors
+	// Take in all OS arg
 	args := os.Args[1:]
-	if len(args) != 1 {
+	if len(args) < 1 {
 		panic("No password length specified! (ex: ./gopass 16)")
 	}
 
 	// Convert String arg to int
 	size, err := strconv.Atoi(args[0])
 	if err != nil {
-		panic("Argument supplied must be an integer! (ex: 16)")
+		panic("First argument supplied must be an integer! (ex: 16)")
+	}
+
+	// Grab second argument (if it exists) and use it as a disallowed character(s)
+	var disallowed []rune
+	if len(args) == 2 {
+		// Break apart the string into a slice of runes
+		disallowed = []rune(args[1])
+
+		// Remove all disallowed characters from the allowedCharacters slice
+		for _, r := range disallowed {
+			for i, v := range allowedCharacters {
+				if v == r {
+					allowedCharacters = append(allowedCharacters[:i], allowedCharacters[i+1:]...)
+				}
+			}
+		}
 	}
 
 	// Make empty array of runes with size of size
@@ -38,11 +54,12 @@ func main() {
 	}
 	mathrand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
 
-	// Assign every slot of pass to a random rune (generate rand int of length runes to select)
+	// Assign every slot of pass to a random allowedCharacter
 	for i := range pass {
-		pass[i] = runes[mathrand.Intn(len(runes))]
+		// Generate a random int greater than 0 and not to exceed the length of allowedCharacters
+		pass[i] = allowedCharacters[mathrand.Intn(len(allowedCharacters))]
 	}
 
-	// Print the pass :D
+	// Print the password
 	fmt.Println(string(pass))
 }
