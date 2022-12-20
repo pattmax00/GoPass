@@ -8,11 +8,12 @@ seeding of math/rand)
 `./gopass [number of characters]`<br>
 or <br>
 `./gopass [number of characters] "[excluded characters]"`
+
 <hr>
-eg:
-`./gopass 32` <br>
+
+eg: `./gopass 32` <br>
 output: `E$bGOiiPASS*,ISl{!MJ&<\[COOL0eVw` <br>
-`./gopass 32 "$,!"` <br>
+eg (with excluded characters): `./gopass 32 "$,!"` <br>
 output: `EYbGOiiPASS*2ISl{?MJ&<\[COOL0eVw` <- note the excluded characters are not present in the output
 
 # How to install/use for Windows:
