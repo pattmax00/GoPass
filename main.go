@@ -18,13 +18,15 @@ func main() {
 	// Take in all OS arg
 	args := os.Args[1:]
 	if len(args) < 1 {
-		panic("No password length specified! (ex: ./gopass 16)")
+		println("No password length specified! (ex: ./gopass 16)")
+		return
 	}
 
 	// Convert String arg to int
 	size, err := strconv.Atoi(args[0])
 	if err != nil {
-		panic("First argument supplied must be an integer! (ex: 16)")
+		println("First argument supplied must be an integer! (ex: 16)")
+		return
 	}
 
 	// Grab second argument (if it exists) and use it as a disallowed character(s)
@@ -50,7 +52,8 @@ func main() {
 	var b [8]byte
 	_, err = cryptorand.Read(b[:])
 	if err != nil {
-		panic("Error securely seeding crypto/rand!")
+		println("Error securely seeding crypto/rand!")
+		return
 	}
 	mathrand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
 
