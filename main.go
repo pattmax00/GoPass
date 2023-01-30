@@ -59,7 +59,6 @@ func main() {
 	mathrand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
 
 	// Assign every slot of pass to a random allowedCharacter
-
 	for i := range pass {
 		// Generate a random int greater than 0 and not to exceed the length of allowedCharacters
 		index, err := cryptorand.Int(cryptorand.Reader, big.NewInt(int64(len(allowedCharacters))))
