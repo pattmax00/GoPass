@@ -7,6 +7,7 @@ import (
 	cryptorand "crypto/rand"
 	"encoding/binary"
 	"fmt"
+	"math/big"
 	mathrand "math/rand"
 	"os"
 	"strconv"
@@ -58,9 +59,15 @@ func main() {
 	mathrand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
 
 	// Assign every slot of pass to a random allowedCharacter
+
 	for i := range pass {
 		// Generate a random int greater than 0 and not to exceed the length of allowedCharacters
-		pass[i] = allowedCharacters[mathrand.Intn(len(allowedCharacters))]
+		index, err := cryptorand.Int(cryptorand.Reader, big.NewInt(int64(len(allowedCharacters))))
+		if err != nil {
+			println("Error securely generating random character!")
+			return
+		}
+		pass[i] = allowedCharacters[index.Int64()]
 	}
 
 	// Print the password
