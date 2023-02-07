@@ -1,20 +1,22 @@
 # GoPass
 
-An easy to use command-line password generator that creates secure passwords (Version 1.1 adds proper cryptographic
-seeding of math/rand)
+An easy to use command-line password generator that creates secure passwords
 
 # Usage:
 
 `./gopass [number of characters]`<br>
 or <br>
-`./gopass [number of characters] "[excluded characters]"`
+`./gopass [number of characters] -r=[excluded characters] [-s to remove all symbols]`
 
 <hr>
 
 eg: `./gopass 32` <br>
 output: `E$bGOiiPASS*,ISl{!MJ&<\[COOL0eVw` <br>
-eg (with excluded characters): `./gopass 32 "$,!"` <br>
-output: `EYbGOiiPASS*2ISl{?MJ&<\[COOL0eVw` <- note the excluded characters are not present in the output
+eg: (with excluded characters): `./gopass 32 -r=$,!` <br>
+output: `EYbGOiiPASS*2ISl{?MJ&<\[COOL0eVw` <- note the excluded characters are not present in the output <br>
+eg: `./gopass 32 -s` <br>
+output: `LEYbGOiiPASS2ISlMJCOOL0eRt3KPOVw` <- note the symbols are not present in the output <br>
+eg: `./gopass 32 -r=$,! -s` the -r and -s flags can be combined <br>
 
 # How to install/use for Windows:
 
