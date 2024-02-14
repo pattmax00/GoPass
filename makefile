@@ -1,5 +1,5 @@
 # The current version number of the program
-VERSION := 1.3.1
+VERSION := 1.3.2
 
 # List of OS and architecture combinations to build
 BUILD_OS_ARCH := \
